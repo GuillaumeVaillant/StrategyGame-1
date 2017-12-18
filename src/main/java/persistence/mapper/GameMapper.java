@@ -20,7 +20,6 @@ import persistence.factories.VirtualProxyBuilder;
 public class GameMapper extends DataMapper<Game> {
 
 	static GameMapper instance;
-	private static final Connection conn = OracleConnection.getConn();
 
 	public static GameMapper getInstance() {
 		if (instance == null)
@@ -56,10 +55,10 @@ public class GameMapper extends DataMapper<Game> {
 		
         String req = "select p.username, p.password from Player p "
         		+ "join Game_player gp using(idPlayer) "
-        		+ "where idGame = ? ;";
+        		+ "where idGame = ? ";
         try {
-        	
-            PreparedStatement pss = conn.prepareStatement(req);
+        	OracleConnection conn = OracleConnection.getInstance();
+            PreparedStatement pss = conn.createRequestPS(req);
             pss.setInt(1, id);
             ResultSet rs = pss.executeQuery();
             List<Player> players = new ArrayList<>();
@@ -85,8 +84,8 @@ public class GameMapper extends DataMapper<Game> {
 		String req = "select t.xAxis, t.yAxis, t.territoryType from territory t join map m using(idTerritory) "
 				+ "join game g using(idGame) where g.idGame = ? ;";
 		try {
-
-			PreparedStatement pss = conn.prepareStatement(req);
+			OracleConnection conn = OracleConnection.getInstance();
+            PreparedStatement pss = conn.createRequestPS(req);
 			pss.setInt(1, id);
 			ResultSet rs = pss.executeQuery();
 			

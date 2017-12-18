@@ -1,11 +1,16 @@
 package domain.objects;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import domain.Observateur;
 import domain.Visiteur;
 import persistence.UnitOfWork;
+import persistence.factories.FactoryListPlayer;
+import persistence.factories.FactoryListGame;
+import persistence.factories.VirtualProxyBuilder;
+
 
 public class Player implements IDomainObject{
 	
@@ -23,6 +28,7 @@ public class Player implements IDomainObject{
 		this.password = password;
 		this.isAlive = true;
 		this.turn = false;
+		this.listGames = new VirtualProxyBuilder<List<Game>>(List.class, new FactoryListGame(this.id)).getProxy();
 		this.obs = new ArrayList<Observateur>();
 		this.obs.add(UnitOfWork.getInstance());
 	}
@@ -38,6 +44,7 @@ public class Player implements IDomainObject{
 
 	public void setIdPlayer(int id) {
 		this.id = id;
+		this.listGames = new VirtualProxyBuilder<List<Game>>(List.class, new FactoryListGame(id)).getProxy();
 	}
 
 	
@@ -76,7 +83,7 @@ public class Player implements IDomainObject{
 	}
 	
 	public List<Game> getListGames() {
-		return listGames;
+		return this.listGames;
 	}
 
 	public void setListGames(List<Game> listGames) {
