@@ -1,44 +1,45 @@
 package persistence;
 
-import domain.Game;
-import domain.Player;
-import domain.Territory;
 import domain.Visiteur;
+import domain.objects.City;
+import domain.objects.Game;
+import domain.objects.Map;
+import domain.objects.Player;
+import domain.objects.Territory;
+import persistence.mapper.CityMapper;
+import persistence.mapper.GameMapper;
+import persistence.mapper.MapMapper;
+import persistence.mapper.PlayerMapper;
+import persistence.mapper.TerritoryMapper;
 
 public class Committer extends Visiteur {
 
 	@Override
 	public void visiter(Player p) {
+		PlayerMapper.getInstance().updatePlayerById(p);
 		
-		DataMapper<Player> dataMap = new DataMapper<Player>("Coo_Player", DataAttributs.getAttributPlayer(), Player.class);
-		
-		try {
-			dataMap.update(p);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} 
 	}
 
 	@Override
-	public void visiter(Game p) {
-		DataMapper<Game> dataMap = new DataMapper<Game>("Coo_Parties", DataAttributs.getAttributGame(), Game.class);
-		
-		try {
-			dataMap.update(p);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} 
+	public void visiter(Game g) {
+		GameMapper.getInstance().updateGameById(g); 
 	}
 
 	@Override
 	public void visiter(Territory p) {
-		DataMapper<Territory> dataMap = new DataMapper<Territory>("Coo_Territory", DataAttributs.getAttributTerritory(), Territory.class);
+		TerritoryMapper.getInstance().updateTerritoryById(p);
+	}
+
+	@Override
+	public void visiter(City c) {
+		CityMapper.getInstance().updateCityById(c);
 		
-		try {
-			dataMap.update(p);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} 
+	}
+
+	@Override
+	public void visiter(Map m) {
+		MapMapper.getInstance().updateMapByIdGame(m);
+		
 	}
 	
 

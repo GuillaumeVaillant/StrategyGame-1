@@ -3,9 +3,9 @@ package persistence;
 import java.util.HashSet;
 import java.util.Set;
 
-import domain.IDomainObject;
 import domain.Observateur;
 import domain.Visiteur;
+import domain.objects.IDomainObject;
 
 //Permet mémoriser les changements en base de données
 public class UnitOfWork implements Observateur {
