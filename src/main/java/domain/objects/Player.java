@@ -38,8 +38,8 @@ public class Player implements IDomainObject{
 	}
 	
 
-	public int getIdPlayer() {
-		return id;
+	public int getIdPlayer(){
+		return this.id;
 	}
 
 	public void setIdPlayer(int id) {

@@ -44,12 +44,14 @@ public class DataMapper<T> {
 			OracleConnection conn = OracleConnection.getInstance();
 			CallableStatement statement = conn.createRequestCS(query.toString());
 
-			int j = 1;
+			int j = 0;
 			Iterator<Map.Entry<String, DataEnumType>> ite = stringClassMap.entrySet().iterator();
 
-			for (int i = 1; i < stringClassMap.size(); i++) {
+			for (int i = 0; i < stringClassMap.size(); i++) {
 				Map.Entry<String, DataEnumType> stringSet = ite.next();
 				String attribut = stringSet.getKey();
+				
+				
 				String name = "get" + attribut.substring(0, 1).toUpperCase() + attribut.substring(1);
 
 				try {
@@ -70,6 +72,13 @@ public class DataMapper<T> {
 			statement.executeQuery();
 
 			hMap.put(statement.getInt(3), obj);
+			try {
+				Method method = maClass.getMethod("getId" + table);
+				Object object = method.invoke(obj);
+				statement.setObject(statement.getInt(3), object);
+			} catch (Exception e){
+				e.printStackTrace();
+			}
 
 			statement.close();
 
@@ -184,7 +193,7 @@ public class DataMapper<T> {
 				OracleConnection conn = OracleConnection.getInstance();
 				PreparedStatement statement = conn.createRequestPS(stringBuilder.toString());
 
-				System.out.println(stringBuilder.toString());
+				//System.out.println(stringBuilder.toString());
 
 				statement.setInt(1, id);
 

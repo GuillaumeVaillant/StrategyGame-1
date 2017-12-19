@@ -38,11 +38,38 @@ public class PlayerMapper extends DataMapper<Player>{
 		return null;
 	}
 	
+	public List<Player> findExistingPlayers() {
+		
+		
+        String req = "select p.idPlayer, p.username, p.password from Player p";
+        
+        try {
+        	OracleConnection conn = OracleConnection.getInstance();
+            PreparedStatement pss = conn.createRequestPS(req);
+            ResultSet rs = pss.executeQuery();
+            List<Player> players = new ArrayList<>();
+            while (rs.next()) {
+            Player player = new Player(rs.getString(2), rs.getString(3));
+            
+            player.setIdPlayer(rs.getInt(1));
+          
+            player.add(UnitOfWork.getInstance());
+			players.add(player);
+            }
+            
+            return players;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            
+        }
+        return null;
+	}
+	
 	public List<Game> findListGames(int id) throws ClassNotFoundException, SQLException 
 	{
 		Player player = this.findById(id);
 		
-        String req = "select g.name, g.currentPlayer, g.turnNumber, g.status, g.turnRessources, g.fieldRessources "
+        String req = "select g.idGame, g.name, g.currentPlayer, g.turnNumber, g.status, g.turnRessources, g.fieldRessources "
         		+ "from Game g "
         		+ "join Game_player gp on gp.idGame = g.idGame "
         		+ "where gp.idPlayer = ? ";
@@ -53,10 +80,11 @@ public class PlayerMapper extends DataMapper<Player>{
             ResultSet rs = pss.executeQuery();
             List<Game> games = new ArrayList<>();
             while (rs.next()) {
-            	Game game = new Game(rs.getString(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getInt(5), rs.getInt(6));
+            	Game game = new Game(rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getString(5), rs.getInt(6), rs.getInt(7));
             	
             	game.add(UnitOfWork.getInstance());
     			games.add(game);
+    			game.setIdGame(rs.getInt(1));
           
             }
             

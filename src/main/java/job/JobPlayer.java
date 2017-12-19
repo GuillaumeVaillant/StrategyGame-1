@@ -1,6 +1,7 @@
 package job;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import domain.objects.Player;
 import persistence.factories.FactoryPlayer;
@@ -21,13 +22,12 @@ public class JobPlayer {
 	
 	
 	public Player findPlayer(int id){
-		try {
-			return new FactoryPlayer(id).create();
-		} catch (Exception e){
-			System.err.println(e.getMessage());
-			return null;
-		}
+		return playerMapper.findPlayerById(id);
 	}
 	
+	
+	public List<Player> findExistingPlayers(){
+		return playerMapper.findExistingPlayers();
+	}
 
 }

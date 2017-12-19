@@ -2,7 +2,9 @@ package run;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import domain.objects.Game;
@@ -11,64 +13,41 @@ import job.JobPlayer;
 import persistence.factories.FactoryListGame;
 import persistence.factories.FactoryListPlayer;
 import persistence.factories.FactoryPlayer;
+import persistence.mapper.DataEnumType;
+import persistence.mapper.DataMapper;
 import persistence.mapper.PlayerMapper;
 
 public class Main {
 	
 	static Scanner sc = new Scanner(System.in);
 	static JobPlayer playerJob = new JobPlayer();
+	static PlayerMapper playerMapper;
+	static DataMapper dataMapper;
 
 	public static void main(String[] args) throws Exception {
 		
 		
 		System.out.println("Bienvenue dans StrategyGame !");
 		
-		System.out.println("Nouveau ? Taper 1");
-		System.out.println("Dï¿½jï¿½ inscrit ? Taper 2");
+		System.out.println("Quel joueur êtes vous ?");
 		
-		int choix = sc.nextInt();
-		Player player = null;
-		switch(choix){
-		case 1: {
-			System.out.println("Entrer un nom de joueur : ");
+		Iterator<Player> ite = playerJob.findExistingPlayers().listIterator();
+		for(int i = 0; i < playerJob.findExistingPlayers().size(); i++){
+			Player playerExisting = ite.next();
+			System.out.println(playerExisting.getUsername() + " ? - Taper " + playerExisting.getIdPlayer());
 			
-			String username = sc.nextLine();
 			
-			player = new Player(username, "");
-			playerJob.insertPlayer(player);
-			
-			System.out.println("Bonjour " + player.getUsername() + "!");
-			System.out.println("Voici votre identifiant Ã  garder pour vous connecter : " + player.getIdPlayer());
-			break;
 		}
-		case 2: {
-			System.out.println("Entrer votre identifiant : ");
+		
 			int idPlayer = sc.nextInt();
-			
-			player = new FactoryPlayer(idPlayer).create();
+			Player player = playerJob.findPlayer(idPlayer);
 			System.out.println("Bonjour " + player.getUsername());
+			System.out.println("Vous avez " + player.getListGames().size() + " partie(s) en cours." );
 			
+			for(Game game : player.getListGames()){
+					System.out.println(game.getIdGame() + " - " + game.getName());
+				}
 			
-			break;
-		}
-		default :
-			System.out.println("Erreur saisie");
-		}
-		
-
-		System.out.println("Vous avez " + player.getListGames().size() + " partie(s) en cours." );
-		
-		
-		
-		/*try {
-			List<Player> players = new FactoryListPlayer(1).create();
-			Game game = new Game();
-			game.setListPlayers(players);
-		}
-		catch(Exception e){
-			System.err.println(e.getMessage());
-		}*/
-		
 	}
 
 }

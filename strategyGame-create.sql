@@ -1,21 +1,21 @@
-﻿/**
+/**
    DROP EXISTING TABLE IF THESE EXIST
 **/
 
-DROP TABLE IF EXISTS Game_player;
-DROP TABLE IF EXISTS Army;
-DROP TABLE IF EXISTS MAP;
-DROP TABLE IF EXISTS TERRITORY;
-DROP TABLE IF EXISTS TOWN;
-DROP TABLE IF EXISTS GAME;
-DROP TABLE IF EXISTS PLAYER;
+DROP TABLE Game_player;
+DROP TABLE Army;
+DROP TABLE  MAP;
+DROP TABLE TERRITORY;
+DROP TABLE TOWN;
+DROP TABLE GAME;
+DROP TABLE PLAYER;
 
 
 /**
    TABLE PLAYER CREATION
 **/
 CREATE TABLE Player(
-idPlayer SERIAL PRIMARY KEY,
+idPlayer number(4) PRIMARY KEY,
 username VARCHAR(60),
 password VARCHAR(60)
 );
@@ -25,11 +25,11 @@ password VARCHAR(60)
    TABLE GAME CREATION
 **/
 CREATE TABLE Game(
-idGame SERIAL PRIMARY KEY,
+idGame number(4) PRIMARY KEY,
 name VARCHAR(50),
-currentPlayer INTEGER,
-turnNumber INTEGER,
-status VARCHAR(50),
+currentPlayer number(4),
+turnNumber number(4),
+status VARCHAR(50) default 'RUNNING',
 turnRessources number(4),
 fieldRessources number(4),
 CONSTRAINT fk_currentPlayer FOREIGN KEY (currentPlayer) REFERENCES Player(idPlayer),
@@ -40,9 +40,9 @@ CONSTRAINT ck_status CHECK (UPPER(status) =  UPPER('WAITING') OR UPPER(status) =
    TABLE GAME_PLAYER 
 **/
 CREATE TABLE Game_Player(
-idPlayer Integer,
-idGame Integer,
-resourcesNb Integer,
+idPlayer number(4),
+idGame number(4),
+resourcesNb number(4),
 CONSTRAINT pk_game_player PRIMARY KEY(idPlayer,idGame),
 CONSTRAINT fk_idPlayer FOREIGN KEY (idPlayer) REFERENCES Player(idPlayer),
 CONSTRAINT fk_idGame FOREIGN KEY (idGame) REFERENCES Game(idGame)
@@ -51,9 +51,9 @@ CONSTRAINT fk_idGame FOREIGN KEY (idGame) REFERENCES Game(idGame)
 /**
     TABLE TOWN 
 **/
-CREATE TABLE TOWN(
-idTown SERIAL PRIMARY KEY,
-townOwner Integer REFERENCES Player(idPlayer),
+CREATE TABLE CITY(
+idCity number(4) PRIMARY KEY,
+townOwner number(4) REFERENCES Player(idPlayer),
 name VARCHAR(50)
 );
 
@@ -62,11 +62,11 @@ name VARCHAR(50)
    TABLE TERRITORY
 **/
 CREATE TABLE Territory(
-idTerritory SERIAL PRIMARY KEY,
+idTerritory number(4) PRIMARY KEY,
 xAxis DECIMAL,
 yAxis DECIMAL,
 territoryType VARCHAR(20),
-idTown Integer REFERENCES Town(idTown),
+idCity number(4) REFERENCES Town(idCity),
 CONSTRAINT ck_territoryType CHECK (UPPER(territoryType) =  UPPER('MOUNTAIN') OR UPPER(territoryType) = UPPER('PLAIN') OR UPPER(territoryType) = UPPER('FIELD') )
 
 );
@@ -75,8 +75,8 @@ CONSTRAINT ck_territoryType CHECK (UPPER(territoryType) =  UPPER('MOUNTAIN') OR 
     TABLE MAP 
 **/
 CREATE TABLE MAP(
-idGame Integer,
-idTerritory Integer,
+idGame number(4),
+idTerritory number(4),
 CONSTRAINT fk_map_territory FOREIGN KEY (idTerritory) REFERENCES Territory(idTerritory),
 CONSTRAINT fk_map_game FOREIGN KEY (idGame) REFERENCES Game(idGame),
 CONSTRAINT pk_map PRIMARY KEY (idGame,idTerritory)
@@ -86,9 +86,9 @@ CONSTRAINT pk_map PRIMARY KEY (idGame,idTerritory)
    TABLE ARMY
 **/
 CREATE TABLE Army(
-idPlayer Integer,
-idTerritory Integer,
-armyNumber Integer,
+idPlayer number(4),
+idTerritory number(4),
+armyNumber number(4),
 CONSTRAINT pk_army PRIMARY KEY (idPlayer,idTerritory),
 CONSTRAINT fk_player FOREIGN KEY (idPlayer) REFERENCES Player(idPlayer),
 CONSTRAINT fk_territory FOREIGN KEY(idTerritory) REFERENCES Territory(idTerritory)
