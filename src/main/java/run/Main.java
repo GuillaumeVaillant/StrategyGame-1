@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import domain.objects.Game;
 import domain.objects.Player;
+import job.JobPlayer;
 import persistence.factories.FactoryListGame;
 import persistence.factories.FactoryListPlayer;
 import persistence.factories.FactoryPlayer;
@@ -15,7 +16,7 @@ import persistence.mapper.PlayerMapper;
 public class Main {
 	
 	static Scanner sc = new Scanner(System.in);
-	static PlayerMapper playerMapper = PlayerMapper.getInstance();
+	static JobPlayer playerJob = new JobPlayer();
 
 	public static void main(String[] args) throws Exception {
 		
@@ -23,10 +24,10 @@ public class Main {
 		System.out.println("Bienvenue dans StrategyGame !");
 		
 		System.out.println("Nouveau ? Taper 1");
-		System.out.println("Déjà inscrit ? Taper 2");
+		System.out.println("Dï¿½jï¿½ inscrit ? Taper 2");
 		
 		int choix = sc.nextInt();
-		Player player;
+		Player player = null;
 		switch(choix){
 		case 1: {
 			System.out.println("Entrer un nom de joueur : ");
@@ -34,10 +35,10 @@ public class Main {
 			String username = sc.nextLine();
 			
 			player = new Player(username, "");
-			playerMapper.insertPlayer(player);
+			playerJob.insertPlayer(player);
 			
 			System.out.println("Bonjour " + player.getUsername() + "!");
-			System.out.println("Voici votre identifiant à garder pour vous connecter : " + player.getIdPlayer());
+			System.out.println("Voici votre identifiant Ã  garder pour vous connecter : " + player.getIdPlayer());
 			break;
 		}
 		case 2: {
@@ -48,14 +49,14 @@ public class Main {
 			System.out.println("Bonjour " + player.getUsername());
 			
 			
-			System.out.println("Vous avez " + player.getListGames().size() + " partie(s) en cours." );
 			break;
 		}
 		default :
 			System.out.println("Erreur saisie");
 		}
 		
-		
+
+		System.out.println("Vous avez " + player.getListGames().size() + " partie(s) en cours." );
 		
 		
 		
