@@ -6,8 +6,6 @@ import java.util.List;
 
 import domain.Observateur;
 import domain.Visiteur;
-import persistence.UnitOfWork;
-import persistence.factories.FactoryPlayer;
 
 public class City implements IDomainObject {
 	
@@ -55,6 +53,20 @@ public class City implements IDomainObject {
 	public void accepter(Visiteur v) {
 		v.visiter(this);
 		
+	}
+
+	/**
+	 * @return the city
+	 */
+	public HashMap<Integer, Player> getCity() {
+		return city;
+	}
+
+	/**
+	 * @param city the city to set
+	 */
+	public void setCity(HashMap<Integer, Player> city) {
+		this.city = city;
 	}
 	
 	

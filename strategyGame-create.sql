@@ -16,8 +16,8 @@ drop sequence seq_id_game;
 drop sequence seq_id_map;
 drop sequence seq_id_city;
 
-create sequence seq_id_player increment by 1 start with 1;
-create sequence seq_id_game increment by 1 start with 1;
+create sequence seq_id_player increment by 2 start with 1;
+create sequence seq_id_game increment by 2 start with 1;
 create sequence seq_id_city increment by 1 start with 1;
 
 /**
@@ -38,12 +38,14 @@ idGame number(4) PRIMARY KEY,
 name VARCHAR(50),
 currentPlayer number(4),
 turnNumber number(4),
-status VARCHAR(50) default 'RUNNING',
+status VARCHAR(50) default 'WAITING',
 turnRessources number(4),
 fieldRessources number(4),
 CONSTRAINT fk_currentPlayer FOREIGN KEY (currentPlayer) REFERENCES Player(idPlayer),
 CONSTRAINT ck_status CHECK (UPPER(status) =  UPPER('WAITING') OR UPPER(status) = UPPER('RUNNING'))
 );
+
+select * from game;
 
 /** 
    TABLE GAME_PLAYER 
@@ -102,5 +104,4 @@ CONSTRAINT pk_army PRIMARY KEY (idPlayer,idTerritory),
 CONSTRAINT fk_player FOREIGN KEY (idPlayer) REFERENCES Player(idPlayer),
 CONSTRAINT fk_territory FOREIGN KEY(idTerritory) REFERENCES Territory(idTerritory)
 );
-
 

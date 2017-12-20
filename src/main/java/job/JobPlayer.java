@@ -1,15 +1,13 @@
 package job;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import domain.objects.Player;
-import persistence.factories.FactoryPlayer;
 import persistence.mapper.PlayerMapper;
 
 public class JobPlayer {
 	
-	private PlayerMapper playerMapper = PlayerMapper.getInstance();;
+	private PlayerMapper playerMapper = PlayerMapper.getInstance();
 	
 	public void insertPlayer(Player player){
 		playerMapper.insertPlayer(player);

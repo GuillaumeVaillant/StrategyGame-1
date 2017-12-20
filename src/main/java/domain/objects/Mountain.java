@@ -21,4 +21,12 @@ public class Mountain  extends Territory {
 		return EnumTerritory.MOUNTAIN;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Mountain";
+	}
+
 }

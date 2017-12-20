@@ -1,13 +1,11 @@
 package domain.objects;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import domain.Observateur;
 import domain.Visiteur;
 import persistence.UnitOfWork;
-import persistence.factories.FactoryListPlayer;
 import persistence.factories.FactoryListGame;
 import persistence.factories.VirtualProxyBuilder;
 

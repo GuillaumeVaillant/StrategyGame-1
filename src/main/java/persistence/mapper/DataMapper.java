@@ -15,6 +15,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.WeakHashMap;
 
+import domain.objects.Player;
+
 public class DataMapper<T> {
 
 	private String table;
@@ -33,7 +35,8 @@ public class DataMapper<T> {
 		StringBuilder query = new StringBuilder();
 		query.append("BEGIN INSERT INTO ").append(table).append(" VALUES(seq_id_").append(table).append(".nextval");
 
-		for (int i = 1; i < stringClassMap.size(); i++) {
+		int i;
+		for (i = 1; i < stringClassMap.size(); i++) {
 			query.append(",?");
 		}
 
@@ -42,44 +45,58 @@ public class DataMapper<T> {
 
 		try {
 			OracleConnection conn = OracleConnection.getInstance();
+
 			CallableStatement statement = conn.createRequestCS(query.toString());
 
 			int j = 0;
 			Iterator<Map.Entry<String, DataEnumType>> ite = stringClassMap.entrySet().iterator();
 
-			for (int i = 0; i < stringClassMap.size(); i++) {
+			
+			for (int k = 0; k < stringClassMap.size(); k++) {
 				Map.Entry<String, DataEnumType> stringSet = ite.next();
 				String attribut = stringSet.getKey();
-				
-				
+
 				String name = "get" + attribut.substring(0, 1).toUpperCase() + attribut.substring(1);
 
 				try {
 					Method method = maClass.getMethod(name);
 
 					Object object = method.invoke(obj);
+					
+					if(object instanceof Player){
+						Player p = (Player) object;
+						object = p.getIdPlayer();
+					}
+					//System.out.println(object + " " + name);
 					statement.setObject(j, object);
 
 				} catch (Exception e) {
-					System.err.println(e.getMessage());
+
+					
 				}
 
 				j++;
+				
 			}
-
-			statement.registerOutParameter(3, Types.NUMERIC);
-
+			
+			
+			statement.registerOutParameter(i, Types.NUMERIC);
+			
 			statement.executeQuery();
 
-			hMap.put(statement.getInt(3), obj);
+			hMap.put(statement.getInt(i), obj);
+			
 			try {
-				Method method = maClass.getMethod("getId" + table);
-				Object object = method.invoke(obj);
-				statement.setObject(3, statement.getInt(3));
-			} catch (Exception e){
+				int value = statement.getInt(i);
+				Method method = maClass.getMethod("setId" + table, int.class);
+				method.invoke(obj, value);
+				
+				
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
+			
 			statement.close();
 
 		} catch (SQLException e) {
@@ -193,7 +210,7 @@ public class DataMapper<T> {
 				OracleConnection conn = OracleConnection.getInstance();
 				PreparedStatement statement = conn.createRequestPS(stringBuilder.toString());
 
-				//System.out.println(stringBuilder.toString());
+				// System.out.println(stringBuilder.toString());
 
 				statement.setInt(1, id);
 

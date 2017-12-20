@@ -1,13 +1,11 @@
 package domain.objects;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import domain.Observateur;
 import domain.Visiteur;
-import persistence.UnitOfWork;
 import persistence.factories.FactoryListPlayer;
 import persistence.factories.FactoryListTerritory;
 import persistence.factories.FactoryPlayer;
@@ -50,9 +48,31 @@ public class Game implements IDomainObject {
 	
 	
 
-	
+	public int getIdGame() {
+		return id;
+	}
+
+
+
+	public void setIdGame(int id) {
+		this.id = id;
+		this.listPlayers = new VirtualProxyBuilder<List<Player>>(List.class, new FactoryListPlayer(id)).getProxy();
+		this.listTerritories = new  VirtualProxyBuilder<List<Territory>>(List.class, new FactoryListTerritory(id)).getProxy();
+	}
 	
 
+	public String getName() {
+		return name;
+	}
+
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
+	
 
 	public HashMap<Player, Integer> getPlayerResources() {
 		return playerResources;
@@ -66,29 +86,11 @@ public class Game implements IDomainObject {
 
 
 
-	public int getIdGame() {
-		return id;
-	}
+	
 
 
 
-	public void setIdGame(int id) {
-		this.id = id;
-		this.listPlayers = new VirtualProxyBuilder<List<Player>>(List.class, new FactoryListPlayer(id)).getProxy();
-		this.listTerritories = new  VirtualProxyBuilder<List<Territory>>(List.class, new FactoryListTerritory(id)).getProxy();
-	}
-
-
-
-	public String getName() {
-		return name;
-	}
-
-
-
-	public void setName(String name) {
-		this.name = name;
-	}
+	
 
 
 

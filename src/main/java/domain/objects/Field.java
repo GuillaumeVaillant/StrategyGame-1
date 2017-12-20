@@ -17,6 +17,14 @@ public class Field  extends Territory{
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Field";
+	}
+
 	@Override
 	public EnumTerritory getEnumTerritoryType() {
 		

@@ -124,6 +124,7 @@ public class GameMapper extends DataMapper<Game> {
 
 	public void insertGame(Game game) {
 
+		
 		try {
 			this.insert(game);
 			game.add(UnitOfWork.getInstance());
