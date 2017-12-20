@@ -2,14 +2,23 @@
    DROP EXISTING TABLE IF THESE EXIST
 **/
 
-DROP TABLE Game_player;
-DROP TABLE Army;
-DROP TABLE  MAP;
-DROP TABLE TERRITORY;
-DROP TABLE TOWN;
-DROP TABLE GAME;
-DROP TABLE PLAYER;
+DROP TABLE Game_player cascade constraints;
+DROP TABLE Army cascade constraints;
+DROP TABLE  MAP cascade constraints;
+DROP TABLE TERRITORY cascade constraints;
+DROP TABLE CITY cascade constraints;
+DROP TABLE GAME cascade constraints;
+DROP TABLE PLAYER cascade constraints;
 
+
+drop sequence seq_id_player;
+drop sequence seq_id_game;
+drop sequence seq_id_map;
+drop sequence seq_id_city;
+
+create sequence seq_id_player increment by 1 start with 1;
+create sequence seq_id_game increment by 1 start with 1;
+create sequence seq_id_city increment by 1 start with 1;
 
 /**
    TABLE PLAYER CREATION
@@ -66,7 +75,7 @@ idTerritory number(4) PRIMARY KEY,
 xAxis DECIMAL,
 yAxis DECIMAL,
 territoryType VARCHAR(20),
-idCity number(4) REFERENCES Town(idCity),
+idCity number(4) REFERENCES City(idCity),
 CONSTRAINT ck_territoryType CHECK (UPPER(territoryType) =  UPPER('MOUNTAIN') OR UPPER(territoryType) = UPPER('PLAIN') OR UPPER(territoryType) = UPPER('FIELD') )
 
 );

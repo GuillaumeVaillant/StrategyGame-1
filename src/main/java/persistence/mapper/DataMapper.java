@@ -75,7 +75,7 @@ public class DataMapper<T> {
 			try {
 				Method method = maClass.getMethod("getId" + table);
 				Object object = method.invoke(obj);
-				statement.setObject(statement.getInt(3), object);
+				statement.setObject(3, statement.getInt(3));
 			} catch (Exception e){
 				e.printStackTrace();
 			}

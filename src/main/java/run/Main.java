@@ -31,6 +31,7 @@ public class Main {
 		
 		System.out.println("Quel joueur êtes vous ?");
 		
+		
 		Iterator<Player> ite = playerJob.findExistingPlayers().listIterator();
 		for(int i = 0; i < playerJob.findExistingPlayers().size(); i++){
 			Player playerExisting = ite.next();
