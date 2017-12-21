@@ -67,6 +67,7 @@ public class DataMapper<T> {
 						Player p = (Player) object;
 						object = p.getIdPlayer();
 					}
+					
 					//System.out.println(object + " " + name);
 					statement.setObject(j, object);
 
@@ -231,6 +232,8 @@ public class DataMapper<T> {
 						String attribut = results.get(i);
 						String name = "set" + attribut.substring(0, 1).toUpperCase() + attribut.substring(1);
 						Method method = null;
+						
+						
 
 						switch (stringClassMap.get(results.get(i))) {
 						case STRING: {
@@ -241,6 +244,8 @@ public class DataMapper<T> {
 						}
 							break;
 						case INTEGER: {
+							
+							
 							method = maClass.getMethod(name, int.class);
 							int value = resultSet.getInt(j);
 
@@ -260,6 +265,7 @@ public class DataMapper<T> {
 
 							method.invoke(obj, value);
 						}
+						
 							break;
 						default:
 							System.err.println("Aucun objet de ce type !");

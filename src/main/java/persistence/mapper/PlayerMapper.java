@@ -30,11 +30,14 @@ public class PlayerMapper extends DataMapper<Player>{
 	public Player findPlayerById(int id) {
 		
 		try{
-		return this.findById(id);
+			Player player = this.findById(id);
+			return player;
+			
 		} catch(Exception e){
 			System.out.println(e.getMessage());
 			
 		}
+		
 		return null;
 	}
 	
@@ -80,11 +83,14 @@ public class PlayerMapper extends DataMapper<Player>{
             ResultSet rs = pss.executeQuery();
             List<Game> games = new ArrayList<>();
             while (rs.next()) {
-            	Game game = new Game(rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getString(5), rs.getInt(6), rs.getInt(7));
+            	
+            	Player currentPlayer = PlayerMapper.getInstance().findById(rs.getInt(3));
+            	Game game = new Game(rs.getString(2), currentPlayer, rs.getInt(4), rs.getString(5), rs.getInt(6), rs.getInt(7));
             	
             	game.add(UnitOfWork.getInstance());
+            	game.setIdGame(rs.getInt(1));
     			games.add(game);
-    			game.setIdGame(rs.getInt(1));
+    			
           
             }
             
@@ -111,15 +117,21 @@ public class PlayerMapper extends DataMapper<Player>{
 		
 		try{
 		this.insert(player);
+		player.add(UnitOfWork.getInstance());
 		} catch(Exception e){
 			System.out.println(e.getMessage());
 		}
+		
+		
 	}
 	
 	public void deletePlayerById(int id) {
 		
 		try{
+			
+		Player player = this.findById(id);
 		this.delete(id);
+		player.add(UnitOfWork.getInstance());
 		} catch(Exception e){
 			System.out.println(e.getMessage());
 		}
@@ -129,6 +141,7 @@ public class PlayerMapper extends DataMapper<Player>{
 		
 		try{
 		this.update(player);
+		player.add(UnitOfWork.getInstance());
 		} catch(Exception e){
 			System.out.println(e.getMessage());
 		}

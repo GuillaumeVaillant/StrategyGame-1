@@ -33,9 +33,17 @@ public class GameMapper extends DataMapper<Game> {
 
 	public Game findGameById(int id) {
 
+		String req = "select g.idGame, g.name, g.currentPlayer, g.turnNumber, g.status, g.turnRessources, g.fieldRessources from game g where g.idGame = ? ";
 		try {
-			Game game = this.findById(id);
-			game.add(UnitOfWork.getInstance());
+			OracleConnection conn = OracleConnection.getInstance();
+            PreparedStatement pss = conn.createRequestPS(req);
+            ResultSet rs = pss.executeQuery();
+            Player player = this.findCurrentPlayerById(rs.getInt(3));
+            Game game = new Game(rs.getString(2), player, rs.getInt(4), rs.getString(5), rs.getInt(6), rs.getInt(7));
+            game.setIdGame(rs.getInt(1));
+            	
+            game.add(UnitOfWork.getInstance());
+          
 			return game;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -44,9 +52,113 @@ public class GameMapper extends DataMapper<Game> {
 	}
 	
 	public Player findCurrentPlayerById(int id){
-		
-        
-	return PlayerMapper.getInstance().findById(id);
+		return PlayerMapper.getInstance().findById(id);
+	}
+	
+	public List<Game> findAllGamesWaiting() {
+
+		String req = "select g.idGame, g.name, g.currentPlayer, g.turnNumber, g.status, g.turnRessources, g.fieldRessources from game g where g.status = 'WAITING' ";
+        try {
+        	OracleConnection conn = OracleConnection.getInstance();
+            PreparedStatement pss = conn.createRequestPS(req);
+            ResultSet rs = pss.executeQuery();
+            List<Game> games = new ArrayList<>();
+            
+            while (rs.next()) {
+            	Player player = this.findCurrentPlayerById(rs.getInt(3));
+            	Game game = new Game(rs.getString(2), player, rs.getInt(4), rs.getString(5), rs.getInt(6), rs.getInt(7));
+            	game.setIdGame(rs.getInt(1));
+            	
+            	game.add(UnitOfWork.getInstance());
+    			games.add(game);
+          
+            }
+            
+            
+            return games;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+	}
+	
+	public List<Game> findAllGamesOwned(int id) {
+
+		String req = "select g.idGame, g.name, g.currentPlayer, g.turnNumber, g.status, g.turnRessources, g.fieldRessources "
+				+ "from game g "
+				+ "where g.currentPlayer = ? and g.status = 'WAITING' ";
+        try {
+        	OracleConnection conn = OracleConnection.getInstance();
+            PreparedStatement pss = conn.createRequestPS(req);
+            pss.setInt(1, id);
+            ResultSet rs = pss.executeQuery();
+            List<Game> games = new ArrayList<>();
+            
+            while (rs.next()) {
+            	Player player = this.findCurrentPlayerById(rs.getInt(3));
+            	Game game = new Game(rs.getString(2), player, rs.getInt(4), rs.getString(5), rs.getInt(6), rs.getInt(7));
+            	game.setIdGame(rs.getInt(1));
+            	
+            	game.add(UnitOfWork.getInstance());
+    			games.add(game);
+          
+            }
+            
+            
+            return games;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+	}
+	
+	public List<Game> findAllGamesNotOwned(int id) {
+
+		String req = "select g.idGame, g.name, g.currentPlayer, g.turnNumber, g.status, g.turnRessources, g.fieldRessources "
+				+ "from game g "
+				+ "join game_player gp on g.idGame = gp.idGame "
+				+ "where g.currentPlayer <> ? and gp.idPlayer <> ? and g.status = 'WAITING' ";
+        try {
+        	OracleConnection conn = OracleConnection.getInstance();
+            PreparedStatement pss = conn.createRequestPS(req);
+            pss.setInt(1, id);
+            pss.setInt(2, id);
+            ResultSet rs = pss.executeQuery();
+            List<Game> games = new ArrayList<>();
+            
+            while (rs.next()) {
+            	Player player = this.findCurrentPlayerById(rs.getInt(3));
+            	Game game = new Game(rs.getString(2), player, rs.getInt(4), rs.getString(5), rs.getInt(6), rs.getInt(7));
+            	game.setIdGame(rs.getInt(1));
+            	
+            	game.add(UnitOfWork.getInstance());
+    			games.add(game);
+          
+            }
+            
+            
+            return games;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+	}
+	
+	public void joinGame(int idPlayer, int idGame) {
+
+		String req = "insert into game_player values(?, ?, 20) ";
+        try {
+        	OracleConnection conn = OracleConnection.getInstance();
+            PreparedStatement pss = conn.createRequestPS(req);
+            pss.setInt(1, idPlayer);
+            pss.setInt(2, idGame);
+            pss.executeQuery();
+            
+            pss.close();
+           
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 	}
 
 	public List<Player> findListPlayers(int id) throws ClassNotFoundException, SQLException 
@@ -127,6 +239,7 @@ public class GameMapper extends DataMapper<Game> {
 		
 		try {
 			this.insert(game);
+			this.joinGame(game.getCurrentPlayer().getIdPlayer(), game.getIdGame());
 			game.add(UnitOfWork.getInstance());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -146,12 +259,7 @@ public class GameMapper extends DataMapper<Game> {
 
 	public void updateGameById(Game game) {
 
-		try {
-			this.update(game);
-			game.add(UnitOfWork.getInstance());
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+		
 	}
 
 }

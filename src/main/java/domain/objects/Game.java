@@ -17,7 +17,7 @@ public class Game implements IDomainObject {
 	
 	private int id;
 	private String name;
-	private int currentPlayer;
+	private Player currentPlayer;
 	private int turnNumber;
 	private String status;
 	private int turnRessources;
@@ -27,7 +27,7 @@ public class Game implements IDomainObject {
 	private List<Territory> listTerritories;
 	private List<Observateur> obs;
 	
-	public Game(String name, int currentPlayer, int turnNumber, String status, int turnRessources, int fieldRessources)
+	public Game(String name, Player currentPlayer, int turnNumber, String status, int turnRessources, int fieldRessources)
 	{
 		this.name = name;
 		this.currentPlayer = currentPlayer;
@@ -99,21 +99,16 @@ public class Game implements IDomainObject {
 
 
 	public Player getCurrentPlayer() {
-		try {
-			return new FactoryPlayer(currentPlayer).create();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		return this.currentPlayer;
 	}
 
 
 
-	public void setCurrentPlayer(int currentPlayer) {
+	public void setCurrentPlayer(Player currentPlayer) {
 		this.currentPlayer = currentPlayer;
 	}
 
-
+	
 	
 
 	public int getTurnNumber() {

@@ -13,12 +13,13 @@ DROP TABLE PLAYER cascade constraints;
 
 drop sequence seq_id_player;
 drop sequence seq_id_game;
-drop sequence seq_id_map;
 drop sequence seq_id_city;
 
-create sequence seq_id_player increment by 2 start with 1;
-create sequence seq_id_game increment by 2 start with 1;
+create sequence seq_id_player increment by 1 start with 1;
+create sequence seq_id_game increment by 1 start with 1;
 create sequence seq_id_city increment by 1 start with 1;
+
+delete from game;
 
 /**
    TABLE PLAYER CREATION
@@ -105,3 +106,7 @@ CONSTRAINT fk_player FOREIGN KEY (idPlayer) REFERENCES Player(idPlayer),
 CONSTRAINT fk_territory FOREIGN KEY(idTerritory) REFERENCES Territory(idTerritory)
 );
 
+select * from player;
+delete from game_player;
+
+delete from game;
