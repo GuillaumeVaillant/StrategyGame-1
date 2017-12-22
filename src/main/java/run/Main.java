@@ -5,12 +5,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.JFrame;
+
 import domain.objects.Game;
 import domain.objects.Player;
 import job.JobGame;
 import job.JobPlayer;
 import persistence.mapper.DataMapper;
 import persistence.mapper.PlayerMapper;
+import view.SreenConnexion;
 
 public class Main {
 
@@ -20,6 +23,10 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 
+		JFrame frame = new SreenConnexion();
+		frame.setVisible(true);
+		
+		/*
 		System.out.println("Bienvenue dans StrategyGame ! \n Quel joueur êtes vous ?");
 
 		
@@ -121,7 +128,7 @@ public class Main {
 			default:
 				System.out.println("Vous avez tapé un mauvais chiffre, choississez entre 1, 2 et 3.");
 				choix = sc.nextInt();
-			}
+			}*/
 		}
 
 		

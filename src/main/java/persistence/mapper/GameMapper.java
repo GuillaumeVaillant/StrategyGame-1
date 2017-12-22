@@ -193,39 +193,55 @@ public class GameMapper extends DataMapper<Game> {
 	public List<Territory> findListTerritories(int id) {
 
 		Game game = findGameById(id);
-		String req = "select t.xAxis, t.yAxis, t.territoryType from territory t join map m using(idTerritory) "
-				+ "join game g using(idGame) where g.idGame = ? ;";
+		
+		String req = "select t.idTerritory, t.xAxis, t.yAxis, t.territoryType, t.idcity from territory t "
+				+ "join map m on t.idTerritory = m.idTerritory "
+				+ "where m.idGame = ?";
+		
 		try {
+			
 			OracleConnection conn = OracleConnection.getInstance();
             PreparedStatement pss = conn.createRequestPS(req);
 			pss.setInt(1, id);
 			ResultSet rs = pss.executeQuery();
 			
 			List<Territory> territories = new ArrayList<>();
-			while (rs.next()) {
-
-				switch (rs.getString(3)) {
-				case "MOUNTAIN": {
-					Territory territory = new Mountain(rs.getInt(1), rs.getInt(2));
-					territory.add(UnitOfWork.getInstance());
-					territories.add(territory);
+			
+			while (rs.next()) 
+			{
+				String territoire = rs.getString(4);
+				Territory territory = null;
+				
+				if(territoire != null)
+				{
+					switch (territoire) {
+					case "MOUNTAIN": 
+						territory = new Mountain(rs.getInt(2), rs.getInt(3));
+						territory.add(UnitOfWork.getInstance());
+						territory.setIdTerritory(rs.getInt(1));
+						territories.add(territory);
+						break;
+					case "PLAIN": 
+						territory = new Plains(rs.getInt(2), rs.getInt(3));
+						territory.add(UnitOfWork.getInstance());
+						territory.setIdTerritory(rs.getInt(1));
+						territories.add(territory);
+						break;
+					case "FIELD": 
+						territory = new Field(rs.getInt(2), rs.getInt(3));
+						territory.add(UnitOfWork.getInstance());
+						territory.setIdTerritory(rs.getInt(1));
+						territories.add(territory);
+						break;
+					default:
+						territory = new Field(rs.getInt(2), rs.getInt(3));
+						territory.add(UnitOfWork.getInstance());
+						territory.setIdTerritory(rs.getInt(1));
+						territories.add(territory);
+						System.err.println("Erreur de type territoire");
+					}
 				}
-					break;
-				case "PLAIN": {
-					Territory territory = new Plains(rs.getInt(1), rs.getInt(2));
-					territory.add(UnitOfWork.getInstance());
-					territories.add(territory);
-				}
-					break;
-				case "FIELD": {
-					Territory territory = new Field(rs.getInt(1), rs.getInt(2));
-					territory.add(UnitOfWork.getInstance());
-					territories.add(territory);
-				}
-
-				default:
-					System.err.println("Erreur de type territoire");
-				}
+				game.setListTerritories(territories);
 			}
 			return game.getListTerritories();
 		} catch (Exception e) {
@@ -260,6 +276,38 @@ public class GameMapper extends DataMapper<Game> {
 	public void updateGameById(Game game) {
 
 		
+	}
+	
+	
+	public List<Game> findAllGamesByStatut(int id,String statu) {
+
+		String req = "select g.idGame, g.name, g.currentPlayer, g.turnNumber, g.status, g.turnRessources, g.fieldRessources "
+				+ "from game g "
+				+ "where g.currentPlayer = ? and g.status = ? ";
+        try {
+        	OracleConnection conn = OracleConnection.getInstance();
+            PreparedStatement pss = conn.createRequestPS(req);
+            pss.setInt(1, id);
+            pss.setString(2, statu);
+            ResultSet rs = pss.executeQuery();
+            List<Game> games = new ArrayList<>();
+            
+            while (rs.next()) {
+            	Player player = this.findCurrentPlayerById(rs.getInt(3));
+            	Game game = new Game(rs.getString(2), player, rs.getInt(4), rs.getString(5), rs.getInt(6), rs.getInt(7));
+            	game.setIdGame(rs.getInt(1));
+            	
+            	game.add(UnitOfWork.getInstance());
+    			games.add(game);
+          
+            }
+            
+            
+            return games;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
 	}
 
 }
