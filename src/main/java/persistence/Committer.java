@@ -16,29 +16,29 @@ public class Committer extends Visiteur {
 
 	@Override
 	public void visiter(Player p) {
-		PlayerMapper.getInstance().updatePlayerById(p);
+		PlayerMapper.getInstance().update(p);
 		
 	}
 
 	@Override
 	public void visiter(Game g) {
-		GameMapper.getInstance().updateGameById(g); 
+		GameMapper.getInstance().update(g); 
 	}
 
 	@Override
 	public void visiter(Territory p) {
-		TerritoryMapper.getInstance().updateTerritoryById(p);
+		TerritoryMapper.getInstance().update(p);
 	}
 
 	@Override
 	public void visiter(City c) {
-		CityMapper.getInstance().updateCityById(c);
+		CityMapper.getInstance().update(c);
 		
 	}
 
 	@Override
 	public void visiter(Map m) {
-		MapMapper.getInstance().updateMapByIdGame(m);
+		MapMapper.getInstance().update(m);
 		
 	}
 	

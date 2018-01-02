@@ -43,7 +43,7 @@ status VARCHAR(50) default 'WAITING',
 turnRessources number(4),
 fieldRessources number(4),
 CONSTRAINT fk_currentPlayer FOREIGN KEY (currentPlayer) REFERENCES Player(idPlayer),
-CONSTRAINT ck_status CHECK (UPPER(status) =  UPPER('WAITING') OR UPPER(status) = UPPER('RUNNING'))
+CONSTRAINT ck_status CHECK (UPPER(status) =  UPPER('WAITING') OR UPPER(status) = UPPER('RUNNING') OR UPPER(status) = UPPER('FINISH'))
 );
 
 select * from game;
@@ -106,7 +106,32 @@ CONSTRAINT fk_player FOREIGN KEY (idPlayer) REFERENCES Player(idPlayer),
 CONSTRAINT fk_territory FOREIGN KEY(idTerritory) REFERENCES Territory(idTerritory)
 );
 
-select * from player;
-delete from game_player;
+insert into Player values(1, 'Margaux', 'saturnin');
+insert into Game values(1, 'Partie1', 1, 1, 'RUNNING', 10, 10);
+--insert into Game_Player values(1, 1, 20);
+insert into Game_Player values(1, 4, 20);
 
-delete from game;
+insert into Game values(5, 'Partie 3', 1, 1, 'FINISH', 10, 10);
+
+--idteritoire x y type idcity
+insert into Territory values (1,0,1,'PLAIN',null);
+insert into Territory values (2,2,1,'PLAIN',null);
+insert into Territory values (3,1,1,'MOUNTAIN',null);
+insert into Territory values (4,1,2,'PLAIN',null);
+insert into Territory values (5,0,3,'FIELD',null);
+insert into Territory values (6,0,4,'MOUNTAIN',null);
+insert into Territory values (7,2,2,'PLAIN',null);
+insert into Territory values (8,5,5,'FIELD',null);
+insert into Territory values (9,3,1,'PLAIN',null);
+
+insert into Map values (4,1);
+insert into Map values (4,2);
+insert into Map values (4,3);
+insert into Map values (4,4);
+insert into Map values (4,5);
+insert into Map values (4,6);
+insert into Map values (4,7);
+insert into Map values (4,8);
+insert into Map values (4,9);
+
+commit;

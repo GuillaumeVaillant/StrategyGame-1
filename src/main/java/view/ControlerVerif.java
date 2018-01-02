@@ -70,9 +70,9 @@ public class ControlerVerif implements ActionListener {
 		List<Game> gamesFinish; 
 		List<Game> gamesParticipe;
 
-		gamesEnAttente = GameMapper.getInstance().findAllGamesByStatut(this.p.getIdPlayer(),"WAITING");
-		gamesEnCours = GameMapper.getInstance().findAllGamesByStatut(this.p.getIdPlayer(),"RUNNING");
-		gamesFinish = GameMapper.getInstance().findAllGamesByStatut(this.p.getIdPlayer(),"FINISH");
+		gamesEnAttente = GameMapper.getInstance().findAllGamesByStatus(this.p.getIdPlayer(),"WAITING");
+		gamesEnCours = GameMapper.getInstance().findAllGamesByStatus(this.p.getIdPlayer(),"RUNNING");
+		gamesFinish = GameMapper.getInstance().findAllGamesByStatus(this.p.getIdPlayer(),"FINISH");
 		gamesParticipe = p.getListGames();
 		
 

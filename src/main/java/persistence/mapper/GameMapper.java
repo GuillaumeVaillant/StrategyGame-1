@@ -1,12 +1,19 @@
 package persistence.mapper;
 
+import java.lang.reflect.Method;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.WeakHashMap;
+import java.util.Map.Entry;
 
 import domain.objects.Field;
 import domain.objects.Game;
@@ -31,8 +38,9 @@ public class GameMapper extends DataMapper<Game> {
 		super("Game", DataAttributs.getAttributGame(), Game.class);
 	}
 
-	public Game findGameById(int id) {
+	public Game findById(int id) {
 
+		if (!hMap.containsKey(id)) {
 		String req = "select g.idGame, g.name, g.currentPlayer, g.turnNumber, g.status, g.turnRessources, g.fieldRessources from game g where g.idGame = ? ";
 		try {
 			OracleConnection conn = OracleConnection.getInstance();
@@ -43,12 +51,14 @@ public class GameMapper extends DataMapper<Game> {
             game.setIdGame(rs.getInt(1));
             	
             game.add(UnitOfWork.getInstance());
+            
+            hMap.put(id, game);
           
-			return game;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		return null;
+		}
+		return hMap.get(id);
 	}
 	
 	public Player findCurrentPlayerById(int id){
@@ -161,9 +171,9 @@ public class GameMapper extends DataMapper<Game> {
         }
 	}
 
-	public List<Player> findListPlayers(int id) throws ClassNotFoundException, SQLException 
+	public List<Player> findListPlayers(int id)
 	{
-		Game game = findGameById(id);
+		Game game = findById(id);
 		
         String req = "select p.username, p.password from Player p "
         		+ "join Game_player gp using(idPlayer) "
@@ -192,7 +202,7 @@ public class GameMapper extends DataMapper<Game> {
 
 	public List<Territory> findListTerritories(int id) {
 
-		Game game = findGameById(id);
+		Game game = findById(id);
 		
 		String req = "select t.idTerritory, t.xAxis, t.yAxis, t.territoryType, t.idcity from territory t "
 				+ "join map m on t.idTerritory = m.idTerritory "
@@ -250,36 +260,170 @@ public class GameMapper extends DataMapper<Game> {
 		return null;
 	}
 
-	public void insertGame(Game game) {
+	public void insert(Game game) {
 
-		
+		StringBuilder query = new StringBuilder();
+		query.append("BEGIN INSERT INTO ").append(table).append(" VALUES(seq_id_").append(table).append(".nextval");
+
+		int i;
+		for (i = 1; i < stringClassMap.size(); i++) {
+			query.append(",?");
+		}
+
+		query.append(")");
+		query.append("RETURNING id").append(table).append(" INTO ?; END;");
+
 		try {
-			this.insert(game);
+			OracleConnection conn = OracleConnection.getInstance();
+
+			CallableStatement statement = conn.createRequestCS(query.toString());
+
+			int j = 0;
+			Iterator<Map.Entry<String, DataEnumType>> ite = stringClassMap.entrySet().iterator();
+
+			
+			for (int k = 0; k < stringClassMap.size(); k++) {
+				Map.Entry<String, DataEnumType> stringSet = ite.next();
+				String attribut = stringSet.getKey();
+
+				String name = "get" + attribut.substring(0, 1).toUpperCase() + attribut.substring(1);
+
+				try {
+					Method method = maClass.getMethod(name);
+
+					Object object = method.invoke(game);
+					
+					if(object instanceof Player){
+						Player p = (Player) object;
+						object = p.getIdPlayer();
+					}
+					
+					//System.out.println(object + " " + name);
+					statement.setObject(j, object);
+
+				} catch (Exception e) {
+				}
+
+				j++;
+				
+			}
+			
+			
+			statement.registerOutParameter(i, Types.NUMERIC);
+			
+			statement.executeQuery();
+
+			hMap.put(statement.getInt(i), game);
+			
+			try {
+				int value = statement.getInt(i);
+				Method method = maClass.getMethod("setId" + table, int.class);
+				method.invoke(game, value);
+				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			
+			
+			statement.close();
 			this.joinGame(game.getCurrentPlayer().getIdPlayer(), game.getIdGame());
 			game.add(UnitOfWork.getInstance());
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+			
+	}
+
+	public void delete(int id) {
+
+			try{
+			
+			Game game = this.findById(id);
+			StringBuilder query = new StringBuilder();
+			query.append("DELETE FROM ").append(table).append(" where ").append("id").append(table).append(" = ?");
+
+			OracleConnection conn = OracleConnection.getInstance();
+			PreparedStatement statement = conn.createRequestPS(query.toString());
+
+			statement.setInt(1, id);
+
+			statement.executeQuery();
+
+			hMap.remove(id);
+			game.add(UnitOfWork.getInstance());
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 
-	public void deleteGameById(int id) {
+	public void update(Game game) {
+
+		StringBuilder query = new StringBuilder();
+		query.append("update ").append(table).append(" set ");
+
+		List<String> listStrings = new LinkedList<>();
+
+		for (Entry<String, DataEnumType> attribute : stringClassMap.entrySet()) {
+			listStrings.add(attribute.getKey() + " = ?");
+		}
+
+		query.append(String.join(", ", listStrings));
+
+		query.append(" where ").append("id").append(table).append(" = ?");
 
 		try {
-			Game game = this.findGameById(id);
-			this.delete(id);
-			game.add(UnitOfWork.getInstance());
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			OracleConnection conn = OracleConnection.getInstance();
+			PreparedStatement statement = conn.createRequestPS(query.toString());
+
+			int j = 1;
+
+			for (Map.Entry<String, DataEnumType> stringSet : stringClassMap.entrySet()) // ensembles
+																						// des
+																						// attributs
+			{
+				String attribut = stringSet.getKey();
+				String name = "get" + attribut.substring(0, 1).toUpperCase() + attribut.substring(1);
+
+				try {
+					Method method = maClass.getMethod(name);
+
+					Object object = method.invoke(game);
+					statement.setObject(j, object);
+
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+
+				j++;
+			}
+
+			// where id ..
+			String attribut = "id" + table;
+			String name = "get" + attribut.substring(0, 1).toUpperCase() + attribut.substring(1);
+
+			try {
+				Method method = maClass.getMethod(name);
+
+				Object object = method.invoke(game);
+				statement.setObject(j, object);
+
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
+			statement.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-	}
-
-	public void updateGameById(Game game) {
-
-		
+	
 	}
 	
 	
-	public List<Game> findAllGamesByStatut(int id,String statu) {
+	public List<Game> findAllGamesByStatus(int id,String status) {
 
 		String req = "select g.idGame, g.name, g.currentPlayer, g.turnNumber, g.status, g.turnRessources, g.fieldRessources "
 				+ "from game g "
@@ -288,7 +432,7 @@ public class GameMapper extends DataMapper<Game> {
         	OracleConnection conn = OracleConnection.getInstance();
             PreparedStatement pss = conn.createRequestPS(req);
             pss.setInt(1, id);
-            pss.setString(2, statu);
+            pss.setString(2, status);
             ResultSet rs = pss.executeQuery();
             List<Game> games = new ArrayList<>();
             

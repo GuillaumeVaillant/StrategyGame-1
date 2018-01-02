@@ -18,6 +18,6 @@ public class FactoryPlayer implements Factory<Player> {
 	@Override
 	public Player create() throws ClassNotFoundException, SQLException {
 		
-		return PlayerMapper.getInstance().findPlayerById(id);
+		return PlayerMapper.getInstance().findById(id);
 	}
 }

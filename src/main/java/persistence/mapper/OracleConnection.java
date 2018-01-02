@@ -10,7 +10,7 @@ public class OracleConnection {
 
 	private static OracleConnection inst;
 	private static Connection conn;
-	private static final String DB_URL = "jdbc:oracle:thin:@localhost:1521:xe";
+	private static final String DB_URL = "jdbc:oracle:thin:@oracle.fil.univ-lille1.fr:1521:filora";
 
 	private OracleConnection() {
 		startConnection();
@@ -37,7 +37,7 @@ public class OracleConnection {
 
 	public void startConnection() {
 		try {
-			conn = DriverManager.getConnection(DB_URL, "system", "system");
+			conn = DriverManager.getConnection(DB_URL, "LEQUERTIER", "saturnin");
 			conn.setAutoCommit(true);
 		} catch (Exception e) {
 			e.printStackTrace();

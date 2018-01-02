@@ -10,17 +10,17 @@ public class JobPlayer {
 	private PlayerMapper playerMapper = PlayerMapper.getInstance();
 	
 	public void insertPlayer(Player player){
-		playerMapper.insertPlayer(player);
+		playerMapper.insert(player);
 		
 	}
 	
 	public void updatePlayer(Player player){
-		playerMapper.updatePlayerById(player);
+		playerMapper.update(player);
 	}
 	
 	
 	public Player findPlayer(int id){
-		return playerMapper.findPlayerById(id);
+		return playerMapper.findById(id);
 	}
 	
 	

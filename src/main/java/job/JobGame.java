@@ -14,13 +14,13 @@ public class JobGame {
 	
 	public Game createGame(String name, Player currentPlayer, int turnNumber, String status, int turnRessources, int fieldRessources){
 		Game game = new Game(name, currentPlayer, turnNumber, status, turnRessources, fieldRessources);
-		gameMapper.insertGame(game);
+		gameMapper.insert(game);
 		
 		return game;
 	}
 	
 	public Game findGameById(int id){
-		return gameMapper.findGameById(id);
+		return gameMapper.findById(id);
 	}
 	
 	public List<Game> getGamesWaiting(){
@@ -40,6 +40,6 @@ public class JobGame {
 	}
 	
 	public void updateGame(Game game){
-		gameMapper.updateGameById(game);
+		gameMapper.update(game);
 	}
 }
