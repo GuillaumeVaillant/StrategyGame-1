@@ -8,13 +8,13 @@ import javax.swing.event.ListSelectionListener;
 import domain.objects.Game;
 import job.JobGame;
 
-public class ListPartieListener implements ListSelectionListener {
+public class ListGamesListener implements ListSelectionListener {
 
 	public JList<Game> list;
 	public ScreenList screen;
 	public JobGame jobGame;
 	
-	public ListPartieListener(JList<Game> list,ScreenList screen)
+	public ListGamesListener(JList<Game> list,ScreenList screen)
 	{
 		this.list = list;
 		this.screen = screen;

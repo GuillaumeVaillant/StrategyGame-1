@@ -5,9 +5,9 @@ import java.awt.FlowLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class SreenConnexion extends JFrame {
+public class ScreenConnection extends JFrame {
 	
-	public SreenConnexion()
+	public ScreenConnection()
 	{
 		JPanel pp = new JPanel();
 		

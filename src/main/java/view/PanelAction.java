@@ -24,28 +24,28 @@ public class PanelAction extends JPanel {
 		contrainte.gridy = 0;
 		
 		buttonAttakCity = new JButton("Attak City");
-		buttonAttakCity.addActionListener(new ControleurAction(this));
+		buttonAttakCity.addActionListener(new ControlerAction(this));
 		add(buttonAttakCity,contrainte);
 		
 		contrainte.gridx = 1;
 		contrainte.gridy = 0;
 		
 		buttonCreateArmy = new JButton("Create Army");
-		buttonCreateArmy.addActionListener(new ControleurAction(this));
+		buttonCreateArmy.addActionListener(new ControlerAction(this));
 		add(buttonCreateArmy,contrainte);
 		
 		contrainte.gridx = 2;
 		contrainte.gridy = 0;
 		
 		buttonCreateCity = new JButton("Create City");
-		buttonCreateCity.addActionListener(new ControleurAction(this));
+		buttonCreateCity.addActionListener(new ControlerAction(this));
 		add(buttonCreateCity,contrainte);
 		
 		contrainte.gridx = 3;
 		contrainte.gridy = 0;
 		
 		buttonMoveArmy = new JButton("Move Army");
-		buttonMoveArmy.addActionListener(new ControleurAction(this));
+		buttonMoveArmy.addActionListener(new ControlerAction(this));
 		add(buttonMoveArmy,contrainte);
 		
 	}

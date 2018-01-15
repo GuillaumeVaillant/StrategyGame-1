@@ -18,9 +18,9 @@ import domain.objects.Player;
 
 public class ScreenList extends JFrame{
 	
-	public JPanel pannelPartieEnAttente = null;
-	public JPanel pannelPartieEnCours = null;
-	public JPanel pannelHistorique = null;
+	public JPanel panelPartieEnAttente = null;
+	public JPanel panelPartieEnCours = null;
+	public JPanel panelHistorique = null;
 	public Game gameSelected = null; 
 	public List<Game> gamesAttente = null;
 	public List<Game> gamesEnCours = null;
@@ -49,9 +49,9 @@ public class ScreenList extends JFrame{
 		JLabel labelPartieEnCours = new JLabel("Partie en cours");
 		JLabel labelHistorique = new JLabel("Historique");
 		
-		pannelPartieEnAttente = new PannelPartieEnAttente(this);
-		pannelPartieEnCours = new PannelPartieEnCours(this);
-		pannelHistorique = new PannelHistorique(this);
+		panelPartieEnAttente = new PanelGamesWaiting(this);
+		panelPartieEnCours = new PanelGamesRunning(this);
+		panelHistorique = new PanelHistorique(this);
 		
 		contrainte.gridx = 0; // colonne
 		contrainte.gridy = 0; //ligne
@@ -61,7 +61,7 @@ public class ScreenList extends JFrame{
 		contrainte.gridx = 0;
 		contrainte.gridy = 1;
 		
-		add(pannelPartieEnAttente,contrainte);
+		add(panelPartieEnAttente,contrainte);
 		
 		contrainte.gridx = 1;
 		contrainte.gridy = 0;
@@ -71,7 +71,7 @@ public class ScreenList extends JFrame{
 		contrainte.gridx = 1;
 		contrainte.gridy = 1;
 		
-		add(pannelPartieEnCours,contrainte);
+		add(panelPartieEnCours,contrainte);
 		
 		contrainte.gridx = 0;
 		contrainte.gridy = 2;
@@ -81,7 +81,7 @@ public class ScreenList extends JFrame{
 		contrainte.gridx = 0;
 		contrainte.gridy = 3;
 		
-		add(pannelHistorique,contrainte);
+		add(panelHistorique,contrainte);
 		
 		contrainte.gridx = 1;
 		contrainte.gridy = 3;
@@ -91,7 +91,7 @@ public class ScreenList extends JFrame{
 		create.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFrame frame = new ScreenCreateParty(p);
+				JFrame frame = new ScreenCreateGame(p);
 				frame.setVisible(true);
 				
 			}

@@ -13,7 +13,7 @@ import job.JobGame;
 import job.JobPlayer;
 import persistence.mapper.DataMapper;
 import persistence.mapper.PlayerMapper;
-import view.SreenConnexion;
+import view.ScreenConnection;
 
 public class Main {
 
@@ -23,7 +23,7 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 
-		JFrame frame = new SreenConnexion();
+		JFrame frame = new ScreenConnection();
 		frame.setVisible(true);
 		
 		/*

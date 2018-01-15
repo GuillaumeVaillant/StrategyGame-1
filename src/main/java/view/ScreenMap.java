@@ -21,7 +21,7 @@ public class ScreenMap extends JFrame {
 		initJframe();
 		GridBagConstraints contrainte = new GridBagConstraints();
 		
-		this.panelMap = new PannelMap(this);
+		this.panelMap = new PanelMap(this);
 		this.panelAction = new PanelAction(this);
 
 		add(this.panelMap);

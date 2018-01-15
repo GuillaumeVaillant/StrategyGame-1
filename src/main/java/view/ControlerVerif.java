@@ -29,6 +29,8 @@ public class ControlerVerif implements ActionListener {
 	{
 		this.verif = verif;
 		this.p = null;
+		this.jobPlayer = new JobPlayer();
+		this.jobGame = new JobGame();
 	}
 	
 	@Override
@@ -42,7 +44,7 @@ public class ControlerVerif implements ActionListener {
 		System.out.println("Try to connect " + this.verif.getLogin() );
 		
 		try {
-			p = PlayerMapper.getInstance().findById(Integer.parseInt(this.verif.getLogin()));
+			p = jobPlayer.findPlayer(Integer.parseInt(this.verif.getLogin()));
 			listGames = p.getListGames();
 			
 		} catch (Exception e) {
@@ -70,9 +72,9 @@ public class ControlerVerif implements ActionListener {
 		List<Game> gamesFinish; 
 		List<Game> gamesParticipe;
 
-		gamesEnAttente = GameMapper.getInstance().findAllGamesByStatus(this.p.getIdPlayer(),"WAITING");
-		gamesEnCours = GameMapper.getInstance().findAllGamesByStatus(this.p.getIdPlayer(),"RUNNING");
-		gamesFinish = GameMapper.getInstance().findAllGamesByStatus(this.p.getIdPlayer(),"FINISH");
+		gamesEnAttente = jobGame.findGameByStatus(this.p.getIdPlayer(),"WAITING");
+		gamesEnCours = jobGame.findGameByStatus(this.p.getIdPlayer(),"RUNNING");
+		gamesFinish = jobGame.findGameByStatus(this.p.getIdPlayer(),"FINISH");
 		gamesParticipe = p.getListGames();
 		
 

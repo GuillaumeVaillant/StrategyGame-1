@@ -42,4 +42,8 @@ public class JobGame {
 	public void updateGame(Game game){
 		gameMapper.update(game);
 	}
+	
+	public List<Game> findGameByStatus(int idPlayer, String status){
+		return gameMapper.findAllGamesByStatus(idPlayer, status);
+	}
 }

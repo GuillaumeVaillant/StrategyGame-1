@@ -11,9 +11,9 @@ import javax.swing.event.ListSelectionListener;
 import domain.objects.Game;
 import persistence.UnitOfWork;
 
-public class PannelPartieEnAttente extends JPanel {
+public class PanelGamesWaiting extends JPanel {
 	
-	public PannelPartieEnAttente(ScreenList screenList)
+	public PanelGamesWaiting(ScreenList screenList)
 	{
 		DefaultListModel<Game> model = new DefaultListModel<Game>();
 		JList<Game> list = new JList<Game>();
@@ -27,7 +27,7 @@ public class PannelPartieEnAttente extends JPanel {
 		
 		ListSelectionModel m = list.getSelectionModel();
 		
-		m.addListSelectionListener(new ListPartieListener(list,screenList));
+		m.addListSelectionListener(new ListGamesListener(list,screenList));
 		
 		add(list);
 	}

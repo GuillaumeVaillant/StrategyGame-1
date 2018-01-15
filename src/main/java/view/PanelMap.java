@@ -10,12 +10,12 @@ import javax.swing.JPanel;
 import domain.objects.EnumTerritory;
 
 
-public class PannelMap extends JPanel {
+public class PanelMap extends JPanel {
 	
 	private JLabel label;
 	private JLabel[][] tabLabel;
 
-	public PannelMap(ScreenMap screenMap) // ça comment à etre le bordel
+	public PanelMap(ScreenMap screenMap) // ça comment à etre le bordel
 	{
 		// tester si la map n'est pas crée puis la crée
 		
@@ -50,7 +50,7 @@ public class PannelMap extends JPanel {
 					}
 				}
 
-				label.addMouseListener(new ControleurMap(i,j,this,screenMap));
+				label.addMouseListener(new ControlerMap(i,j,this,screenMap));
 				tabLabel[i][j] = label;
 				add(label);
 			}

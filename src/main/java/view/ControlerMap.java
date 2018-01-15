@@ -7,17 +7,17 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 
-public class ControleurMap implements MouseListener {
+public class ControlerMap implements MouseListener {
 	
 	private int i;
 	private int j;
-	private PannelMap pannelMap;
+	private PanelMap panelMap;
 	private ScreenMap screen;
 	
-	public ControleurMap(int i,int j, PannelMap pannelMap, ScreenMap screenMap) {
+	public ControlerMap(int i,int j, PanelMap panelMap, ScreenMap screenMap) {
 		this.i = i;
 		this.j = j;
-		this.pannelMap = pannelMap;
+		this.panelMap = panelMap;
 		this.screen = screenMap;
 	}
 
@@ -28,12 +28,12 @@ public class ControleurMap implements MouseListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		this.pannelMap.getListlabel()[this.i][this.j].setBackground(Color.RED);
+		this.panelMap.getListlabel()[this.i][this.j].setBackground(Color.RED);
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		this.pannelMap.getListlabel()[this.i][this.j].setBackground(Color.GRAY);
+		this.panelMap.getListlabel()[this.i][this.j].setBackground(Color.GRAY);
 	}
 
 	@Override

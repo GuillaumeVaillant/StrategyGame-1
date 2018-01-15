@@ -27,11 +27,11 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 
-public class ScreenCreateParty extends JFrame {
+public class ScreenCreateGame extends JFrame {
 	
 	private String type;
-	
-	public ScreenCreateParty(Player player)
+	JobGame jobGame;
+	public ScreenCreateGame(Player player)
 	{
 
 		
@@ -111,9 +111,8 @@ public class ScreenCreateParty extends JFrame {
 				System.out.println(text0.getText() + "\n" + type + "\n" + text2.getValue() + "\n" + text1.getValue()+ "\n" + text4.getValue()+ "\n" + text5.getValue() + "\n" + text6.getValue());
 				//MenuSetting setting = new MenuSetting(0, text0.getText(),type,(int) text2.getValue(),(int) text1.getValue(),(int) text4.getValue(),(int) text5.getValue(),(int) text6.getValue(),null);
 				
-				Game game = new Game(text0.getText(),player,(int) text2.getValue(),"WAITING",(int) text6.getValue(),12);
-				JobGame job = new JobGame();
-				job.createGame(text0.getText(),player,(int) text2.getValue(),"WAITING",(int) text6.getValue(),12);
+				jobGame = new JobGame();
+				jobGame.createGame(text0.getText(),player,(int) text2.getValue(),"WAITING",(int) text6.getValue(),12);
 				
 				System.out.println("test");
 				//new ScreenMap(game);	

@@ -3,11 +3,11 @@ package view;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ControleurAction implements ActionListener {
+public class ControlerAction implements ActionListener {
 
 	public PanelAction panel;
 	
-	public ControleurAction(PanelAction panelAction)
+	public ControlerAction(PanelAction panelAction)
 	{
 		this.panel = panelAction;
 	}

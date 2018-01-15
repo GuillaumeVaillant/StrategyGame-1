@@ -9,9 +9,9 @@ import domain.objects.Game;
 import persistence.UnitOfWork;
 
 
-public class PannelHistorique extends JPanel{
+public class PanelHistorique extends JPanel{
 
-	public PannelHistorique(ScreenList screenList) {
+	public PanelHistorique(ScreenList screenList) {
 		DefaultListModel<Game> model = new DefaultListModel<Game>();
 		JList<Game> list = new JList<Game>();
 		
@@ -24,7 +24,7 @@ public class PannelHistorique extends JPanel{
 		
 		ListSelectionModel m = list.getSelectionModel();
 		
-		m.addListSelectionListener(new ListPartieListener(list,screenList));
+		m.addListSelectionListener(new ListGamesListener(list,screenList));
 		add(list);
 	}
 
