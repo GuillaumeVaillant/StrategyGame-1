@@ -92,6 +92,7 @@ public class Map implements IDomainObject {
 
 	public void setGame(Game game) {
 		this.game = game;
+		this.notifier();
 	}
 
 	public List<Territory> getListTerritories() {
@@ -100,6 +101,7 @@ public class Map implements IDomainObject {
 
 	public void setListTerritories(List<Territory> listTerritories) {
 		this.listTerritories = listTerritories;
+		this.notifier();
 	}
 
 	@Override

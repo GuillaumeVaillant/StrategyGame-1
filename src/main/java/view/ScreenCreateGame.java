@@ -59,12 +59,6 @@ public class ScreenCreateGame extends JFrame {
 		add(label0);
 		add(text0);
 		
-		JLabel label1 = new JLabel("Type de partie");
-		label1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		JComboBox combo1 = new JComboBox(tab);
-		combo1.addItemListener(new ItemState());
-		add(label1);
-		add(combo1);
 		
 		JLabel label2 = new JLabel("Nombre de tours");
 		label2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -84,13 +78,13 @@ public class ScreenCreateGame extends JFrame {
 		add(label4);
 		add(text4);
 		
-		JLabel label5 = new JLabel("Ressource par joueur");
+		JLabel label5 = new JLabel("Nombre ressources par joueur");
 		label5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		JFormattedTextField text5 = new JFormattedTextField(formatter);
 		add(label5);
 		add(text5);
 		
-		JLabel label6 = new JLabel("Ressource par tour");
+		JLabel label6 = new JLabel("Nombre ressources par tour");
 		label6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		JFormattedTextField text6 = new JFormattedTextField(formatter);
 		add(label6);
@@ -108,14 +102,11 @@ public class ScreenCreateGame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				System.out.println(text0.getText() + "\n" + type + "\n" + text2.getValue() + "\n" + text1.getValue()+ "\n" + text4.getValue()+ "\n" + text5.getValue() + "\n" + text6.getValue());
-				//MenuSetting setting = new MenuSetting(0, text0.getText(),type,(int) text2.getValue(),(int) text1.getValue(),(int) text4.getValue(),(int) text5.getValue(),(int) text6.getValue(),null);
-				
 				jobGame = new JobGame();
 				jobGame.createGame(text0.getText(),player,(int) text2.getValue(),"WAITING",(int) text6.getValue(),12);
 				
-				System.out.println("test");
-				//new ScreenMap(game);	
+				dispose();
+				
 			}
 		});
 		

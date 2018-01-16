@@ -36,6 +36,7 @@ public abstract class Territory implements IDomainObject {
 
 	public void setIdTerritory(int id) {
 		this.id = id;
+		this.notifier();
 	}
 
 	public int getxAxis() {
@@ -44,6 +45,7 @@ public abstract class Territory implements IDomainObject {
 
 	public void setxAxis(int xAxis) {
 		this.xAxis = xAxis;
+		this.notifier();
 	}
 
 	public int getyAxis() {
@@ -52,6 +54,7 @@ public abstract class Territory implements IDomainObject {
 
 	public void setyAxis(int yAxis) {
 		this.yAxis = yAxis;
+		this.notifier();
 	}
 
 	public HashMap<Player, Integer> getArmy() {
@@ -60,6 +63,7 @@ public abstract class Territory implements IDomainObject {
 
 	public void setArmy(HashMap<Player, Integer> army) {
 		this.army = army;
+		this.notifier();
 	}
 
 	public City getCity() {
@@ -68,6 +72,7 @@ public abstract class Territory implements IDomainObject {
 
 	public void setCity(City city) {
 		this.city = city;
+		this.notifier();
 	}
 
 	@Override

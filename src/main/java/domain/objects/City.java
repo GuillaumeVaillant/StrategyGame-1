@@ -35,6 +35,7 @@ public class City implements IDomainObject {
 
 	public void setId(int id) {
 		this.id = id;
+		this.notifier();
 	}
 
 	@Override
@@ -67,6 +68,7 @@ public class City implements IDomainObject {
 	 */
 	public void setCity(HashMap<Integer, Player> city) {
 		this.city = city;
+		this.notifier();
 	}
 	
 	

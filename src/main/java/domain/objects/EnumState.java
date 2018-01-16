@@ -1,5 +1,5 @@
 package domain.objects;
 
 public enum EnumState {
-	RUNNING, WAITING
+	RUNNING, WAITING, FINISHED
 }

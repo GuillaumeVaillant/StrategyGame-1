@@ -43,6 +43,7 @@ public class Player implements IDomainObject{
 	public void setIdPlayer(int id) {
 		this.id = id;
 		this.listGames = new VirtualProxyBuilder<List<Game>>(List.class, new FactoryListGame(id)).getProxy();
+		this.notifier();
 	}
 
 	
@@ -54,6 +55,7 @@ public class Player implements IDomainObject{
 
 	public void setUsername(String username) {
 		this.username = username;
+		this.notifier();
 	}
 
 	public String getPassword() {
@@ -62,6 +64,7 @@ public class Player implements IDomainObject{
 
 	public void setPassword(String password) {
 		this.password = password;
+		this.notifier();
 	}
 
 	public boolean isAlive() {
@@ -70,6 +73,7 @@ public class Player implements IDomainObject{
 
 	public void setAlive(int isAlive) {
 		this.isAlive = isAlive == 1 ? true : false;
+		this.notifier();
 	}
 
 	public boolean isTurn() {
@@ -78,6 +82,7 @@ public class Player implements IDomainObject{
 
 	public void setTurn(int turn) {
 		this.turn = turn == 1 ? true : false;
+		this.notifier();
 	}
 	
 	public List<Game> getListGames() {
@@ -86,6 +91,7 @@ public class Player implements IDomainObject{
 
 	public void setListGames(List<Game> listGames) {
 		this.listGames = listGames;
+		this.notifier();
 	}
 
 	@Override

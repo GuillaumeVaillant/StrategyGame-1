@@ -69,6 +69,7 @@ public class Game implements IDomainObject {
 
 	public void setName(String name) {
 		this.name = name;
+		this.notifier();
 	}
 	
 	
@@ -82,6 +83,7 @@ public class Game implements IDomainObject {
 
 	public void setPlayerResources(HashMap<Player, Integer> playerResources) {
 		this.playerResources = playerResources;
+		this.notifier();
 	}
 
 	public Player getCurrentPlayer() {
@@ -92,6 +94,7 @@ public class Game implements IDomainObject {
 
 	public void setCurrentPlayer(Player currentPlayer) {
 		this.currentPlayer = currentPlayer;
+		this.notifier();
 	}
 
 	
@@ -103,6 +106,7 @@ public class Game implements IDomainObject {
 
 	public void setTurnNumber(int turnNumber) {
 		this.turnNumber = turnNumber;
+		this.notifier();
 	}
 
 	public String getStatus() {
@@ -113,6 +117,7 @@ public class Game implements IDomainObject {
 
 	public void setStatus(String status) {
 		this.status = status;
+		this.notifier();
 	}
 
 
@@ -126,6 +131,7 @@ public class Game implements IDomainObject {
 
 	public void setTurnRessources(int turnRessources) {
 		this.turnRessources = turnRessources;
+		this.notifier();
 	}
 
 
@@ -138,6 +144,7 @@ public class Game implements IDomainObject {
 
 	public void setFieldRessources(int fieldRessources) {
 		this.fieldRessources = fieldRessources;
+		this.notifier();
 	}
 
 
@@ -150,6 +157,7 @@ public class Game implements IDomainObject {
 
 	public void setListTerritories(List<Territory> listTerritories) {
 		this.listTerritories = listTerritories;
+		this.notifier();
 	}
 
 
@@ -166,6 +174,7 @@ public class Game implements IDomainObject {
 
 	public void setListPlayers(List<Player> listPlayers) {
 		this.listPlayers = listPlayers;
+		this.notifier();
 	}
 
 	public String toString()

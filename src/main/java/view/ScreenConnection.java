@@ -7,6 +7,11 @@ import javax.swing.JPanel;
 
 public class ScreenConnection extends JFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public ScreenConnection()
 	{
 		JPanel pp = new JPanel();

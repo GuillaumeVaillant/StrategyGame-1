@@ -114,6 +114,7 @@ public class PlayerMapper extends DataMapper<Player>{
           
             }
             
+            
             player.setListGames(games);
             return player.getListGames();
         } catch (Exception e) {
