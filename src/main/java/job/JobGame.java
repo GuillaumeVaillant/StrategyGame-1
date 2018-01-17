@@ -12,8 +12,8 @@ public class JobGame {
 	private GameMapper gameMapper = GameMapper.getInstance();
 	
 	
-	public Game createGame(String name, Player currentPlayer, int turnNumber, String status, int turnRessources, int fieldRessources){
-		Game game = new Game(name, currentPlayer, turnNumber, status, turnRessources, fieldRessources);
+	public Game createGame(String name, Player currentPlayer, int turnNumber, String status, int turnRessources, int fieldRessources, int nbPlayer, int sizeMap){
+		Game game = new Game(name, currentPlayer, turnNumber, status, turnRessources, fieldRessources, nbPlayer, sizeMap);
 		gameMapper.insert(game);
 		
 		return game;

@@ -42,8 +42,10 @@ turnNumber number(4),
 status VARCHAR(50) default 'WAITING',
 turnRessources number(4),
 fieldRessources number(4),
+nbPlayers number(4),
+sizeMap number(4),
 CONSTRAINT fk_currentPlayer FOREIGN KEY (currentPlayer) REFERENCES Player(idPlayer),
-CONSTRAINT ck_status CHECK (UPPER(status) =  UPPER('WAITING') OR UPPER(status) = UPPER('RUNNING') OR UPPER(status) = UPPER('FINISH'))
+CONSTRAINT ck_status CHECK (UPPER(status) =  UPPER('WAITING') OR UPPER(status) = UPPER('RUNNING') OR UPPER(status) = UPPER('FINISHED'))
 );
 
 select * from game;
@@ -107,11 +109,11 @@ CONSTRAINT fk_territory FOREIGN KEY(idTerritory) REFERENCES Territory(idTerritor
 );
 
 insert into Player values(1, 'Margaux', 'saturnin');
-insert into Game values(1, 'Partie1', 1, 1, 'RUNNING', 10, 10);
+insert into Game values(1, 'Partie 1', 1, 1, 'RUNNING', 10, 10, 4, 20);
 --insert into Game_Player values(1, 1, 20);
 insert into Game_Player values(1, 4, 20);
 
-insert into Game values(5, 'Partie 3', 1, 1, 'FINISH', 10, 10);
+insert into Game values(5, 'Partie 2', 1, 1, 'FINISHED', 10, 10, 4, 20);
 
 --idteritoire x y type idcity
 insert into Territory values (1,0,1,'PLAIN',null);

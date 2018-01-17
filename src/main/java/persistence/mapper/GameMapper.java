@@ -47,7 +47,7 @@ public class GameMapper extends DataMapper<Game> {
             PreparedStatement pss = conn.createRequestPS(req);
             ResultSet rs = pss.executeQuery();
             Player player = this.findCurrentPlayerById(rs.getInt(3));
-            Game game = new Game(rs.getString(2), player, rs.getInt(4), rs.getString(5), rs.getInt(6), rs.getInt(7));
+            Game game = new Game(rs.getString(2), player, rs.getInt(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getInt(9));
             game.setIdGame(rs.getInt(1));
             	
             game.add(UnitOfWork.getInstance());
@@ -76,7 +76,7 @@ public class GameMapper extends DataMapper<Game> {
             
             while (rs.next()) {
             	Player player = this.findCurrentPlayerById(rs.getInt(3));
-            	Game game = new Game(rs.getString(2), player, rs.getInt(4), rs.getString(5), rs.getInt(6), rs.getInt(7));
+            	Game game = new Game(rs.getString(2), player, rs.getInt(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getInt(9));
             	game.setIdGame(rs.getInt(1));
             	
             	game.add(UnitOfWork.getInstance());
@@ -106,7 +106,7 @@ public class GameMapper extends DataMapper<Game> {
             
             while (rs.next()) {
             	Player player = this.findCurrentPlayerById(rs.getInt(3));
-            	Game game = new Game(rs.getString(2), player, rs.getInt(4), rs.getString(5), rs.getInt(6), rs.getInt(7));
+            	Game game = new Game(rs.getString(2), player, rs.getInt(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getInt(9));
             	game.setIdGame(rs.getInt(1));
             	
             	game.add(UnitOfWork.getInstance());
@@ -138,7 +138,7 @@ public class GameMapper extends DataMapper<Game> {
             
             while (rs.next()) {
             	Player player = this.findCurrentPlayerById(rs.getInt(3));
-            	Game game = new Game(rs.getString(2), player, rs.getInt(4), rs.getString(5), rs.getInt(6), rs.getInt(7));
+            	Game game = new Game(rs.getString(2), player, rs.getInt(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getInt(9));
             	game.setIdGame(rs.getInt(1));
             	
             	game.add(UnitOfWork.getInstance());
@@ -438,7 +438,7 @@ public class GameMapper extends DataMapper<Game> {
             
             while (rs.next()) {
             	Player player = this.findCurrentPlayerById(rs.getInt(3));
-            	Game game = new Game(rs.getString(2), player, rs.getInt(4), rs.getString(5), rs.getInt(6), rs.getInt(7));
+            	Game game = new Game(rs.getString(2), player, rs.getInt(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getInt(9));
             	game.setIdGame(rs.getInt(1));
             	
             	game.add(UnitOfWork.getInstance());

@@ -78,7 +78,7 @@ public class ScreenCreateGame extends JFrame {
 		add(label4);
 		add(text4);
 		
-		JLabel label5 = new JLabel("Nombre ressources par joueur");
+		JLabel label5 = new JLabel("Nombre ressources par champ");
 		label5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		JFormattedTextField text5 = new JFormattedTextField(formatter);
 		add(label5);
@@ -103,9 +103,9 @@ public class ScreenCreateGame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				jobGame = new JobGame();
-				jobGame.createGame(text0.getText(),player,(int) text2.getValue(),"WAITING",(int) text6.getValue(),12);
+				jobGame.createGame(text0.getText(),player,(int) text2.getValue(),"WAITING",(int) text6.getValue(),(int) text5.getValue(), (int) text4.getValue(),(int) text1.getValue());
 				
-				dispose();
+				fermerAppli();
 				
 			}
 		});

@@ -105,7 +105,7 @@ public class PlayerMapper extends DataMapper<Player>{
             while (rs.next()) {
             	
             	Player currentPlayer = PlayerMapper.getInstance().findById(rs.getInt(3));
-            	Game game = new Game(rs.getString(2), currentPlayer, rs.getInt(4), rs.getString(5), rs.getInt(6), rs.getInt(7));
+            	Game game = new Game(rs.getString(2), currentPlayer, rs.getInt(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getInt(9));
             	
             	game.add(UnitOfWork.getInstance());
             	game.setIdGame(rs.getInt(1));

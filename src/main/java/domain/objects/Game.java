@@ -22,12 +22,14 @@ public class Game implements IDomainObject {
 	private String status;
 	private int turnRessources;
 	private int fieldRessources;
+	private int nbPlayer;
+	private int sizeMap;
 	private List<Player> listPlayers;
 	private HashMap<Player,Integer> playerResources;
 	private List<Territory> listTerritories;
 	private List<Observateur> obs;
 	
-	public Game(String name, Player currentPlayer, int turnNumber, String status, int turnRessources, int fieldRessources)
+	public Game(String name, Player currentPlayer, int turnNumber, String status, int turnRessources, int fieldRessources, int nbPlayer, int sizeMap)
 	{
 		this.name = name;
 		this.currentPlayer = currentPlayer;
@@ -36,12 +38,30 @@ public class Game implements IDomainObject {
 		this.playerResources = new HashMap<>();
 		this.turnRessources = turnRessources;
 		this.fieldRessources = fieldRessources;
+		this.nbPlayer = nbPlayer;
+		this.sizeMap = sizeMap;
 		this.listPlayers = new VirtualProxyBuilder<List<Player>>(List.class, new FactoryListPlayer(id)).getProxy();
 		this.listTerritories = new  VirtualProxyBuilder<List<Territory>>(List.class, new FactoryListTerritory(id)).getProxy();
 		this.obs = new ArrayList<Observateur>();
 		
 	}
 	
+	public int getNbPlayer() {
+		return nbPlayer;
+	}
+
+	public void setNbPlayer(int nbPlayer) {
+		this.nbPlayer = nbPlayer;
+	}
+
+	public int getSizeMap() {
+		return sizeMap;
+	}
+
+	public void setSizeMap(int sizeMap) {
+		this.sizeMap = sizeMap;
+	}
+
 	public Game(){
 		
 	}

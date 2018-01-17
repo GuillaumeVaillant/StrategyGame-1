@@ -59,32 +59,7 @@ public class Map implements IDomainObject {
 		}
 		System.out.println(this.listTerritories);
 	}
-	/*
-	 * public List<Territory> getTableTerritory() { List<Territory> tabTerritory
-	 * = new
-	 * Territory[getMaxX(this.listTerritories)][getMaxY(this.listTerritories)];
-	 * 
-	 * for (int i = 0; i < tabTerritory.length; i++) { for (int j = 0; j <
-	 * tabTerritory[i].length; j++) { for (Territory territories :
-	 * listTerritories) { if(i == territories.getCoordX() && j ==
-	 * territories.getCoordY()) { tabTerritory[i][j] = territories; } } } }
-	 * 
-	 * return tabTerritory; }
-	 * 
-	 * public int getMaxX(List<Territory> list) { int max = Integer.MIN_VALUE;
-	 * 
-	 * for(int i=0; i<list.size(); i++) { if(list.get(i).getCoordX() > max){ max
-	 * = list.get(i).getCoordX(); } }
-	 * 
-	 * return max; }
-	 * 
-	 * public int getMaxY(List<Territory> list) { int max = Integer.MIN_VALUE;
-	 * 
-	 * for(int i=0; i<list.size(); i++) { if(list.get(i).getCoordY() > max){ max
-	 * = list.get(i).getCoordY(); } }
-	 * 
-	 * return max; }
-	 */
+	
 
 	public Game getGame() {
 		return game;
@@ -121,6 +96,8 @@ public class Map implements IDomainObject {
 		v.visiter(this);
 
 	}
+	
+	
 
 	/*
 	 * (non-Javadoc)

@@ -74,7 +74,7 @@ public class ControlerVerif implements ActionListener {
 
 		gamesEnAttente = jobGame.findGameByStatus(this.p.getIdPlayer(),"WAITING");
 		gamesEnCours = jobGame.findGameByStatus(this.p.getIdPlayer(),"RUNNING");
-		gamesFinish = jobGame.findGameByStatus(this.p.getIdPlayer(),"FINISH");
+		gamesFinish = jobGame.findGameByStatus(this.p.getIdPlayer(),"FINISHED");
 		gamesParticipe = p.getListGames();
 		
 
